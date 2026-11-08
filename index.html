@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#176b56">
+  <meta name="description" content="A friendly, free tile matching game with familiar Singapore food, places and everyday things. Play at your own pace.">
+  <title>Kaki Match · A little play, every day</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23176b56'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-size='65'%3E🌸%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="engine.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#game">Skip to the game</a>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Kaki Match home"><span class="brand-mark" aria-hidden="true">✿</span><span>Kaki<span class="brand-light">Match</span></span></a>
+    <div class="header-actions"><button class="quiet-button" id="sound-button" type="button" aria-pressed="false">Sound: off</button><button class="quiet-button" id="help-button" type="button">How to play <span aria-hidden="true">↗</span></button></div>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow"><span aria-hidden="true">●</span> A LITTLE PLAY, EVERY DAY</p>
+      <h1 id="page-title">Familiar things.<br><span>Happy little matches.</span></h1>
+      <p class="intro-copy">Turn over two tiles and find a matching pair.<br>No rush, no time limit. Just enjoy yourself, lah.</p>
+      <div class="intro-decoration" aria-hidden="true"><span class="decor-tile decor-one">☕</span><span class="decor-tile decor-two">☕<span class="decor-check">✓</span></span><span class="sparkle">✧</span></div>
+    </section>
+
+    <div class="game-layout">
+      <aside class="settings-panel" aria-labelledby="settings-title">
+        <div class="panel-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="settings-title">Make it yours</h2></div>
+        <form id="settings-form">
+          <fieldset><legend>Choose a theme</legend><div class="theme-options">
+            <label class="theme-option"><input type="radio" name="theme" value="food" checked><span class="theme-icon" aria-hidden="true">🍜</span><span><strong>Local favourites</strong><small>Food &amp; drinks · 美食</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+            <label class="theme-option"><input type="radio" name="theme" value="places"><span class="theme-icon" aria-hidden="true">🏡</span><span><strong>Around the island</strong><small>Familiar places · 地点</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+            <label class="theme-option"><input type="radio" name="theme" value="everyday"><span class="theme-icon" aria-hidden="true">🧺</span><span><strong>Everyday treasures</strong><small>Things we know · 日常用品</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+          </div></fieldset>
+          <fieldset class="size-field"><legend>How many tiles?</legend><div class="size-options">
+            <label><input type="radio" name="size" value="8" checked><span>8<small>4 pairs</small></span></label>
+            <label><input type="radio" name="size" value="12"><span>12<small>6 pairs</small></span></label>
+            <label><input type="radio" name="size" value="16"><span>16<small>8 pairs</small></span></label>
+            <label><input type="radio" name="size" value="24"><span>24<small>12 pairs</small></span></label>
+          </div><p class="field-hint">Start small. You can always try more!</p></fieldset>
+          <label class="select-label" for="pace">Time to see each pair</label><select id="pace" name="pace"><option value="2000">Relaxed · 2 seconds</option><option value="3000">Extra time · 3 seconds</option><option value="1000">Quick · 1 second</option></select>
+          <button class="primary-button start-button" type="submit">Start a new game <span aria-hidden="true">→</span></button>
+          <p class="settings-note">Your choices are saved on this device.</p>
+        </form>
+        <div class="gentle-note"><span aria-hidden="true">🌱</span><p>A little practice, a little joy.<br>Every match is a small win.</p></div>
+      </aside>
+
+      <section class="game-panel" id="game" aria-labelledby="game-title" tabindex="-1">
+        <div class="game-heading"><div><p class="eyebrow" id="theme-caption">FOOD &amp; DRINKS</p><h2 id="game-title">Local favourites</h2></div><span class="no-rush"><span aria-hidden="true">☀</span> Take your time</span></div>
+        <div class="stats" aria-label="Game progress"><div><span class="stat-label">Pairs found</span><strong><span id="pairs-found">0</span><span class="stat-total" id="pairs-total"> / 4</span></strong></div><div><span class="stat-label">Your turns</span><strong id="turns">0</strong></div><div><span class="stat-label">Time played</span><strong id="timer">0:00</strong></div></div>
+        <div class="progress-track" role="progressbar" aria-label="Pairs found" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="progress"><span id="progress-fill"></span></div>
+        <p class="game-message" id="game-message" role="status" aria-live="polite" aria-atomic="true">Pick any two tiles to find a pair.</p>
+        <div class="tile-grid" id="tile-grid" aria-label="Matching tiles"></div>
+        <div class="board-footer"><span id="board-note">Same picture? That's a pair!</span><button class="peek-button" id="peek-button" type="button"><span aria-hidden="true">☼</span> Take a little peek</button></div>
+      </section>
+    </div>
+    <footer class="site-footer"><span class="footer-flower" aria-hidden="true">✿</span> Made for familiar faces and everyday joy.<span class="footer-detail">Free to play · No sign-up needed</span></footer>
+  </main>
+
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" type="button" aria-label="Close instructions" data-close>×</button><span class="dialog-icon" aria-hidden="true">🌼</span><h2 id="help-title">Let's play, kaki!</h2><ol class="instructions"><li>Choose a theme and the number of tiles, then press <strong>Start a new game</strong>.</li><li>Tap a tile to reveal its picture. Tap another to look for the same picture.</li><li>Matching tiles stay face up. If they are different, try again!</li><li>Find all the pairs. Use <strong>Take a little peek</strong> whenever you need a hint.</li></ol><p>There is no time limit and no penalty for taking a peek. With a keyboard, use Tab to reach a tile and Enter or Space to turn it over. Arrow keys also move between tiles.</p><button class="primary-button" type="button" data-close>Got it, let's play</button></dialog>
+  <dialog id="win-dialog" aria-labelledby="win-title"><button class="dialog-close" type="button" aria-label="Close celebration" data-close>×</button><span class="dialog-icon" aria-hidden="true">🎉</span><p class="eyebrow">ALL PAIRS FOUND</p><h2 id="win-title">Well done, kaki!</h2><p id="win-summary"></p><p>A little patience, a lovely result.</p><button class="primary-button" id="play-again" type="button">Play again <span aria-hidden="true">↻</span></button><button class="text-button" type="button" data-close>Enjoy my completed board</button></dialog>
+  <noscript><div class="noscript">Please enable JavaScript in your browser to play Kaki Match.</div></noscript>
+</body>
+</html>
