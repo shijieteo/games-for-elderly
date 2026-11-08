@@ -8,11 +8,12 @@ Open `index.html` in a modern browser, or visit your GitHub Pages site. Players 
 
 - **Three themes:** local food and drinks, familiar places, and everyday objects.
 - **Four board sizes:** 8, 12, 16 or 24 tiles (4–12 pairs).
+- **Face-up preview:** each round shows all tiles until you press **Start game**, then hides the same layout for matching.
 - **Relaxed play:** no countdown or losing condition. The clock simply records time played, beginning with the first tile selected.
 - **Reveal speed:** choose 2 seconds, 3 seconds, or 1 second to view a mismatched pair.
 - **Hints:** reveal the board for 5 seconds, as often as needed, without a penalty.
 - **Optional sound:** off by default.
-- **Device preferences:** theme, board size, reveal speed and sound are saved locally when browser storage is available. Settings apply when starting a new game.
+- **Device preferences:** theme, board size, reveal speed and sound are saved locally when browser storage is available. Settings update the preview before play, or apply to the next round during play.
 - **Accessible controls:** responsive layout, visible focus, screen-reader announcements, reduced-motion support, English and Chinese tile labels, and keyboard operation. Use Tab and Enter/Space, or arrow keys between tiles; Home/End reach the first/last tile.
 
 The interface and instructions are in English. Chinese labels accompany each picture; this is not a fully translated Chinese interface. Pictures use built-in emoji and can look slightly different on different devices. Tile names provide an additional recognition cue.

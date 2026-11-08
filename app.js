@@ -13,6 +13,7 @@
   let peekTimeout;
   let winTimeout;
   let peeking = false;
+  let awaitingStart = true;
   let startedAt = null;
   let finishedSeconds = 0;
   let audioContext;
@@ -73,25 +74,26 @@
 
   function renderCards() {
     game.cards.forEach((card, index) => {
-      const revealed = card.matched || peeking || game.selected.includes(index);
+      const revealed = awaitingStart || card.matched || peeking || game.selected.includes(index);
       const button = buttons[index];
       button.classList.toggle('is-revealed', revealed);
       button.classList.toggle('is-matched', card.matched);
       button.setAttribute('aria-label', `Tile ${index + 1}: ${revealed ? `${card.name}, ${card.local}${card.matched ? ', matched' : ''}` : 'face down'}`);
-      button.setAttribute('aria-disabled', String(card.matched || peeking || game.locked || game.complete));
+      button.setAttribute('aria-disabled', String(awaitingStart || card.matched || peeking || game.locked || game.complete));
     });
     $('pairs-found').textContent = game.pairs;
     $('turns').textContent = game.turns;
     $('progress').setAttribute('aria-valuenow', game.pairs);
     $('progress-fill').style.width = `${game.pairs / (game.cards.length / 2) * 100}%`;
-    $('peek-button').disabled = peeking || game.locked || game.complete;
+    $('peek-button').disabled = awaitingStart || peeking || game.locked || game.complete;
   }
 
-  function startGame(moveFocus = false) {
+  function prepareGame(moveFocus = false) {
     clearTimeout(turnTimeout);
     clearTimeout(peekTimeout);
     clearTimeout(winTimeout);
     peeking = false;
+    awaitingStart = true;
     startedAt = null;
     finishedSeconds = 0;
     game = createGame(settings.theme, settings.size);
@@ -100,7 +102,8 @@
     $('game-title').textContent = themes[settings.theme].title;
     $('pairs-total').textContent = ` / ${settings.size / 2}`;
     $('progress').setAttribute('aria-valuemax', settings.size / 2);
-    $('board-note').textContent = "Same picture? That's a pair!";
+    $('board-note').textContent = 'Take your time to remember the pictures.';
+    $('start-button').innerHTML = 'Start game <span aria-hidden="true">→</span>';
     $('peek-button').innerHTML = '<span aria-hidden="true">☼</span> Take a little peek';
     grid.classList.toggle('large-grid', settings.size === 24);
     grid.replaceChildren();
@@ -115,10 +118,10 @@
       return button;
     });
     renderCards();
-    message('Pick any two tiles to find a pair.');
+    message('Have a look at all the tiles. Press Start game when you are ready to hide them.');
     if (moveFocus) {
       $('game').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
-      buttons[0].focus({ preventScroll: true });
+      $('start-button').focus({ preventScroll: true });
     }
   }
 
@@ -137,7 +140,7 @@
 
   grid.addEventListener('click', event => {
     const button = event.target.closest('button[data-index]');
-    if (!button || peeking) return;
+    if (!button || awaitingStart || peeking) return;
     const index = Number(button.dataset.index);
     const outcome = selectCard(game, index);
     if (outcome === 'ignored') return;
@@ -177,7 +180,7 @@
   });
 
   $('peek-button').addEventListener('click', () => {
-    if (peeking || game.locked || game.complete) return;
+    if (awaitingStart || peeking || game.locked || game.complete) return;
     peeking = true;
     renderCards();
     $('peek-button').textContent = 'Have a look…';
@@ -190,13 +193,34 @@
     }, 5000);
   });
 
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!game.complete && (game.turns > 0 || game.selected.length > 0) && !window.confirm('Start a new game? This will clear your current board.')) return;
+  function applySettings() {
     const data = new FormData(form);
     settings = { ...settings, theme: data.get('theme'), size: Number(data.get('size')), pace: Number(data.get('pace')) };
     saveSettings();
-    startGame(true);
+  }
+
+  form.addEventListener('change', () => {
+    if (!awaitingStart) return;
+    const { theme, size } = settings;
+    applySettings();
+    if (settings.theme !== theme || settings.size !== size) prepareGame();
+  });
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (awaitingStart) {
+      awaitingStart = false;
+      $('start-button').innerHTML = 'Start a new game <span aria-hidden="true">→</span>';
+      $('board-note').textContent = "Same picture? That's a pair!";
+      renderCards();
+      message('Pick any two tiles to find a pair.');
+      $('game').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+      buttons[0].focus({ preventScroll: true });
+      return;
+    }
+    if (!game.complete && (game.turns > 0 || game.selected.length > 0) && !window.confirm('Start a new game? This will clear your current board.')) return;
+    applySettings();
+    prepareGame(true);
   });
 
   $('sound-button').addEventListener('click', () => {
@@ -209,14 +233,14 @@
   document.querySelectorAll('[data-close]').forEach(button => button.addEventListener('click', () => button.closest('dialog').close()));
   $('play-again').addEventListener('click', () => {
     $('win-dialog').close();
-    startGame(true);
+    prepareGame(true);
   });
 
   form.querySelector(`input[name="theme"][value="${settings.theme}"]`).checked = true;
   form.querySelector(`input[name="size"][value="${settings.size}"]`).checked = true;
   $('pace').value = settings.pace;
   updateSoundButton();
-  startGame();
+  prepareGame();
   setInterval(() => {
     if (game && !game.complete) $('timer').textContent = formatTime(elapsed());
   }, 1000);
