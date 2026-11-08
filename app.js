@@ -5,7 +5,7 @@
   const form = $('settings-form');
   const grid = $('tile-grid');
   const storageKey = 'kaki-match-settings-v1';
-  const defaults = { theme: 'food', size: 8, pace: 2000, sound: false };
+  const defaults = { theme: 'food', size: 8, pace: 2000, sound: false, mode: 'solo' };
   let settings = { ...defaults };
   let game;
   let buttons = [];
@@ -24,6 +24,7 @@
       if (Object.hasOwn(themes, saved.theme)) settings.theme = saved.theme;
       if ([8, 12, 16, 24].includes(saved.size)) settings.size = saved.size;
       if ([1000, 2000, 3000].includes(saved.pace)) settings.pace = saved.pace;
+      if (['solo', 'teams'].includes(saved.mode)) settings.mode = saved.mode;
       settings.sound = saved.sound === true;
     }
   } catch { /* The game also works when browser storage is unavailable. */ }
@@ -40,7 +41,30 @@
     return startedAt === null ? 0 : Math.floor((performance.now() - startedAt) / 1000);
   }
 
-  function message(text) { $('game-message').textContent = text; }
+  function message(text) {
+    const turn = game?.mode === 'teams' && !awaitingStart && !game.complete
+      ? ` Team ${game.activeTeam + 1}'s turn.` : '';
+    $('game-message').textContent = text + turn;
+  }
+
+  function teamResult() {
+    const [first, second] = game.teamScores;
+    return first === second ? "It's a tie!" : `Team ${first > second ? 1 : 2} wins!`;
+  }
+
+  function renderTeams() {
+    $('team-scoreboard').hidden = game.mode !== 'teams';
+    $('turns-label').textContent = game.mode === 'teams' ? 'Total turns' : 'Your turns';
+    if (game.mode !== 'teams') return;
+    game.teamScores.forEach((score, index) => {
+      $(`team-${index + 1}-score`).textContent = `${score} ${score === 1 ? 'pair' : 'pairs'}`;
+      $(`team-${index + 1}-card`).classList.toggle('is-active', !game.complete && game.activeTeam === index);
+    });
+    $('team-turn').textContent = game.complete ? teamResult()
+      : awaitingStart ? 'Team 1 will go first. Each team chooses two tiles per turn.'
+      : game.locked ? `Team ${game.activeTeam + 1}'s tiles will hide, then Team ${2 - game.activeTeam} plays.`
+      : `Team ${game.activeTeam + 1}'s turn — choose ${game.selected.length ? 'one more tile' : 'two tiles'}.`;
+  }
 
   function sound(kind) {
     if (!settings.sound) return;
@@ -86,6 +110,7 @@
     $('progress').setAttribute('aria-valuenow', game.pairs);
     $('progress-fill').style.width = `${game.pairs / (game.cards.length / 2) * 100}%`;
     $('peek-button').disabled = awaitingStart || peeking || game.locked || game.complete;
+    renderTeams();
   }
 
   function prepareGame(moveFocus = false) {
@@ -96,7 +121,7 @@
     awaitingStart = true;
     startedAt = null;
     finishedSeconds = 0;
-    game = createGame(settings.theme, settings.size);
+    game = createGame(settings.theme, settings.size, Math.random, settings.mode);
     $('timer').textContent = '0:00';
     $('theme-caption').textContent = themes[settings.theme].caption;
     $('game-title').textContent = themes[settings.theme].title;
@@ -130,11 +155,14 @@
   function finish() {
     finishedSeconds = elapsed();
     $('timer').textContent = formatTime(finishedSeconds);
-    message(`Well done! You found all ${game.pairs} pairs in ${game.turns} turns.`);
+    const scores = game.teamScores.map((score, index) => `Team ${index + 1}: ${score} ${score === 1 ? 'pair' : 'pairs'}.`).join(' ');
+    const result = game.mode === 'teams' ? `${teamResult()} ${scores} ` : '';
+    message(`${result}Well done! You found all ${game.pairs} pairs in ${game.turns} turns.`);
+    $('win-title').textContent = game.mode === 'teams' ? teamResult() : 'Well done, kaki!';
     $('board-note').textContent = 'All matched. Lovely work!';
     sound('complete');
     winTimeout = setTimeout(() => {
-      $('win-summary').textContent = `You found all ${game.pairs} pairs in ${game.turns} turns, with ${formatTime(finishedSeconds)} of happy play.`;
+      $('win-summary').textContent = `${result}You found all ${game.pairs} pairs in ${game.turns} turns, with ${formatTime(finishedSeconds)} of happy play.`;
       if ($('help-dialog').open) $('help-dialog').close();
       $('win-dialog').showModal();
     }, 650);
@@ -144,6 +172,7 @@
     const button = event.target.closest('button[data-index]');
     if (!button || awaitingStart || peeking) return;
     const index = Number(button.dataset.index);
+    const playingTeam = game.activeTeam + 1;
     const outcome = selectCard(game, index);
     if (outcome === 'ignored') return;
     if (startedAt === null) startedAt = performance.now();
@@ -152,13 +181,15 @@
       message(`${game.cards[index].name}. Now choose another tile.`);
       sound('flip');
     } else if (outcome === 'match') {
-      message(`A lovely match! Two ${game.cards[index].name} tiles. Keep going.`);
+      message(game.mode === 'teams'
+        ? `Team ${playingTeam} found a pair of ${game.cards[index].name} tiles and earned a point!`
+        : `A lovely match! Two ${game.cards[index].name} tiles. Keep going.`);
       sound('match');
     } else if (outcome === 'complete') {
       finish();
     } else {
       const names = game.selected.map(i => game.cards[i].name).join(' and ');
-      message(`${names}. Different pictures — have another try!`);
+      message(`${names}. ${game.mode === 'teams' ? 'Different pictures — the next team plays after these tiles hide.' : 'Different pictures — have another try!'}`);
       turnTimeout = setTimeout(() => {
         resolveMismatch(game);
         renderCards();
@@ -197,15 +228,20 @@
 
   function applySettings() {
     const data = new FormData(form);
-    settings = { ...settings, theme: data.get('theme'), size: Number(data.get('size')), pace: Number(data.get('pace')) };
+    settings = { ...settings, theme: data.get('theme'), size: Number(data.get('size')), pace: Number(data.get('pace')), mode: data.get('mode') };
     saveSettings();
   }
 
   form.addEventListener('change', () => {
     if (!awaitingStart) return;
-    const { theme, size } = settings;
+    const { theme, size, mode } = settings;
     applySettings();
     if (settings.theme !== theme || settings.size !== size) prepareGame();
+    else if (settings.mode !== mode) {
+      game.mode = settings.mode;
+      renderCards();
+      message('Have a look at all the tiles. Press Start game when you are ready to hide them.');
+    }
   });
 
   form.addEventListener('submit', event => {
@@ -241,6 +277,7 @@
   form.querySelector(`input[name="theme"][value="${settings.theme}"]`).checked = true;
   form.querySelector(`input[name="size"][value="${settings.size}"]`).checked = true;
   $('pace').value = settings.pace;
+  $('mode').value = settings.mode;
   updateSoundButton();
   prepareGame();
   setInterval(() => {

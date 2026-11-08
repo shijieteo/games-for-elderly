@@ -47,15 +47,16 @@
     return result;
   }
 
-  function createGame(theme, size, random = Math.random) {
+  function createGame(theme, size, random = Math.random, mode = 'solo') {
     if (!Object.hasOwn(themes, theme) || ![8, 12, 16, 24].includes(size)) {
       throw new Error('Choose a valid theme and tile count.');
     }
+    if (!['solo', 'teams'].includes(mode)) throw new Error('Choose a valid play mode.');
     const selected = shuffle(themes[theme].items, random).slice(0, size / 2);
     const cards = shuffle(selected.flatMap(item => [0, 1].map(copy => ({
       id: `${item[0]}-${copy}`, key: item[0], emoji: item[1], name: item[2], local: item[3], matched: false
     }))), random);
-    return { theme, cards, selected: [], turns: 0, pairs: 0, locked: false, complete: false };
+    return { theme, mode, cards, selected: [], turns: 0, pairs: 0, locked: false, complete: false, activeTeam: 0, teamScores: [0, 0] };
   }
 
   function selectCard(game, index) {
@@ -68,8 +69,10 @@
     if (first.key === second.key) {
       first.matched = second.matched = true;
       game.pairs++;
+      if (game.mode === 'teams') game.teamScores[game.activeTeam]++;
       game.selected = [];
       game.complete = game.pairs === game.cards.length / 2;
+      if (game.mode === 'teams' && !game.complete) game.activeTeam = 1 - game.activeTeam;
       return game.complete ? 'complete' : 'match';
     }
     game.locked = true;
@@ -80,6 +83,7 @@
     if (!game.locked) return;
     game.selected = [];
     game.locked = false;
+    if (game.mode === 'teams') game.activeTeam = 1 - game.activeTeam;
   }
 
   const api = { themes, shuffle, createGame, selectCard, resolveMismatch };

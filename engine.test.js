@@ -70,3 +70,53 @@ test('all pairs can be completed, matched tiles cannot be reused, and a new game
   assert.equal(fresh.turns, 0);
   assert.ok(fresh.cards.every(card => !card.matched));
 });
+
+test('teams share one two-tile guess and pass the turn only after a mismatch is hidden', () => {
+  const game = createGame('food', 8, Math.random, 'teams');
+  const different = game.cards.findIndex(card => card.key !== game.cards[0].key);
+  assert.equal(selectCard(game, 0), 'first');
+  assert.equal(game.activeTeam, 0);
+  assert.equal(selectCard(game, 0), 'ignored');
+  assert.equal(selectCard(game, different), 'mismatch');
+  assert.equal(game.activeTeam, 0);
+  assert.equal(selectCard(game, 2), 'ignored');
+  assert.deepEqual(game.teamScores, [0, 0]);
+  resolveMismatch(game);
+  assert.equal(game.activeTeam, 1);
+  assert.equal(game.turns, 1);
+  resolveMismatch(game);
+  assert.equal(game.activeTeam, 1);
+});
+
+test('each team earns its own pairs and alternates even after a correct guess', () => {
+  const game = createGame('places', 8, Math.random, 'teams');
+  const keys = [...new Set(game.cards.map(card => card.key))];
+  keys.forEach((key, turn) => {
+    const pair = game.cards.flatMap((card, index) => card.key === key ? [index] : []);
+    assert.equal(game.activeTeam, turn % 2);
+    assert.equal(selectCard(game, pair[0]), 'first');
+    assert.equal(selectCard(game, pair[1]), turn === 3 ? 'complete' : 'match');
+    assert.equal(game.teamScores[turn % 2], Math.floor(turn / 2) + 1);
+    assert.equal(game.teamScores.reduce((sum, score) => sum + score, 0), game.pairs);
+    const nextTeam = game.activeTeam;
+    assert.equal(selectCard(game, pair[0]), 'ignored');
+    assert.equal(game.activeTeam, nextTeam);
+  });
+  assert.deepEqual(game.teamScores, [2, 2]);
+  assert.equal(game.activeTeam, 1);
+  assert.equal(game.complete, true);
+  const fresh = createGame('places', 8, Math.random, 'teams');
+  assert.equal(fresh.activeTeam, 0);
+  assert.deepEqual(fresh.teamScores, [0, 0]);
+});
+
+test('solo play does not track team points or alternate teams, and invalid modes are rejected', () => {
+  const game = createGame('everyday', 8);
+  const pair = game.cards.flatMap((card, index) => card.key === game.cards[0].key ? [index] : []);
+  selectCard(game, pair[0]);
+  selectCard(game, pair[1]);
+  assert.equal(game.mode, 'solo');
+  assert.equal(game.activeTeam, 0);
+  assert.deepEqual(game.teamScores, [0, 0]);
+  assert.throws(() => createGame('food', 8, Math.random, 'invalid'));
+});

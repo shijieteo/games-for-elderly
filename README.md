@@ -10,11 +10,12 @@ Open `index.html` in a modern browser, or visit your GitHub Pages site. Players 
 - **Four board sizes:** 8, 12, 16 or 24 tiles (4–12 pairs).
 - **Face-up preview:** each round shows all tiles until you press **Start game**, then hides the same layout for matching.
 - **Numbered tile backs:** large, high-contrast numbers run left to right, top to bottom, so players can call out their choices. Numbers stay fixed throughout the round.
+- **Optional team play:** choose **Two teams** to share one board. Team 1 starts; teams alternate after every two-tile guess, including correct guesses. Each matching pair earns the guessing team 1 point. Mismatches hide before the turn passes. The board shows the current team and both scores, and announces the winner or a tie when all pairs are found.
 - **Relaxed play:** no countdown or losing condition. The clock simply records time played, beginning with the first tile selected.
 - **Reveal speed:** choose 2 seconds, 3 seconds, or 1 second to view a mismatched pair.
 - **Hints:** reveal the board for 5 seconds, as often as needed, without a penalty.
 - **Optional sound:** off by default.
-- **Device preferences:** theme, board size, reveal speed and sound are saved locally when browser storage is available. Settings update the preview before play, or apply to the next round during play.
+- **Device preferences:** theme, board size, play mode, reveal speed and sound are saved locally when browser storage is available. Settings update the preview before play, or apply to the next round during play.
 - **Accessible controls:** responsive layout, visible focus, screen-reader announcements, reduced-motion support, English and Chinese tile labels, and keyboard operation. Use Tab and Enter/Space, or arrow keys between tiles; Home/End reach the first/last tile.
 
 The interface and instructions are in English. Chinese labels accompany each picture; this is not a fully translated Chinese interface. Food and landmark tiles use local SVG illustrations; everyday objects use built-in emoji and can look slightly different on different devices. Tile names provide an additional recognition cue.
@@ -49,7 +50,7 @@ node --test engine.test.js
 node --check app.js
 ```
 
-The tests cover all theme/size combinations, valid decks, invalid settings, repeated selections, mismatch locking, completing a board, and fresh-game state.
+The tests cover all theme/size combinations, valid decks, invalid settings, repeated selections, mismatch locking, completing a board, fresh-game state, team turn handoffs, team scoring, and solo-mode compatibility.
 
 ## Customise the pictures
 
