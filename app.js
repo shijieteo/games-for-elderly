@@ -106,6 +106,7 @@
     $('start-button').innerHTML = 'Start game <span aria-hidden="true">→</span>';
     $('peek-button').innerHTML = '<span aria-hidden="true">☼</span> Take a little peek';
     grid.classList.toggle('large-grid', settings.size === 24);
+    grid.classList.toggle('illustrated-grid', settings.theme !== 'everyday');
     grid.replaceChildren();
     buttons = game.cards.map((card, index) => {
       const button = document.createElement('button');
@@ -113,7 +114,8 @@
       button.className = 'tile';
       button.dataset.index = index;
       // All card content is from the fixed, local theme definitions.
-      button.innerHTML = `<span class="tile-inner" aria-hidden="true"><span class="tile-back"><span class="tile-back-flower">✿</span></span><span class="tile-front"><span class="tile-emoji">${card.emoji}</span><span class="tile-name">${card.name}</span><span class="tile-local" lang="zh-Hans">${card.local}</span></span></span>`;
+      const illustration = window.KakiIllustrations?.[card.key];
+      button.innerHTML = `<span class="tile-inner" aria-hidden="true"><span class="tile-back"><span class="tile-number">${index + 1}</span></span><span class="tile-front"><span class="tile-emoji${illustration ? ' tile-picture' : ''}">${illustration || card.emoji}</span><span class="tile-name">${card.name}</span><span class="tile-local" lang="zh-Hans">${card.local}</span></span></span>`;
       grid.append(button);
       return button;
     });

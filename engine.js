@@ -6,23 +6,23 @@
     food: {
       title: 'Local favourites', caption: 'FOOD & DRINKS',
       items: [
-        ['kopi', '☕', 'Kopi', '咖啡'], ['noodles', '🍜', 'Noodles', '面'],
-        ['rice', '🍚', 'Rice', '米饭'], ['satay', '🍢', 'Satay', '沙爹'],
-        ['tea', '🍵', 'Tea', '茶'], ['prawn', '🦐', 'Prawn', '虾'],
-        ['fish', '🐟', 'Fish', '鱼'], ['pineapple', '🍍', 'Pineapple', '黄梨'],
-        ['watermelon', '🍉', 'Watermelon', '西瓜'], ['banana', '🍌', 'Banana', '香蕉'],
-        ['peanut', '🥜', 'Peanuts', '花生'], ['bread', '🍞', 'Bread', '面包']
+        ['kopi', '☕', 'Kopi', '咖啡'], ['laksa', '🍜', 'Laksa', '叻沙'],
+        ['fried-rice', '🍛', 'Fried Rice', '炒饭'], ['satay', '🍢', 'Satay', '沙爹'],
+        ['teh-tarik', '🫖', 'Teh Tarik', '拉茶'], ['chilli-crab', '🦀', 'Chilli Crab', '辣椒螃蟹'],
+        ['roti-prata', '🫓', 'Roti Prata', '印度煎饼'], ['pineapple-tarts', '🥮', 'Pineapple Tarts', '黄梨挞'],
+        ['ice-kachang', '🍧', 'Ice Kachang', '红豆冰'], ['curry-puff', '🥟', 'Curry Puff', '咖喱角'],
+        ['kueh', '🍰', 'Kueh Lapis', '九层糕'], ['kaya-toast', '🍞', 'Kaya Toast', '咖椰吐司']
       ]
     },
     places: {
-      title: 'Around the island', caption: 'FAMILIAR PLACES',
+      title: 'Around the island', caption: 'SINGAPORE LANDMARKS',
       items: [
-        ['home', '🏠', 'Home', '家'], ['hawker', '🍽️', 'Hawker centre', '小贩中心'],
-        ['hospital', '🏥', 'Hospital', '医院'], ['school', '🏫', 'School', '学校'],
-        ['park', '🌳', 'Park', '公园'], ['mosque', '🕌', 'Mosque', '清真寺'],
-        ['temple', '🛕', 'Temple', '庙'], ['beach', '🏖️', 'Beach', '海滩'],
-        ['mrt', '🚉', 'MRT station', '地铁站'], ['airport', '✈️', 'Airport', '机场'],
-        ['market', '🛒', 'Market', '巴刹'], ['garden', '🌷', 'Garden', '花园']
+        ['merlion', '🦁', 'Merlion', '鱼尾狮'], ['lau-pa-sat', '🍽️', 'Lau Pa Sat', '老巴刹'],
+        ['esplanade', '🎭', 'Esplanade', '滨海艺术中心'], ['national-museum', '🏛️', 'National Museum', '国家博物馆'],
+        ['botanic-gardens', '🌳', 'Botanic Gardens', '植物园'], ['sultan-mosque', '🕌', 'Sultan Mosque', '苏丹回教堂'],
+        ['buddha-tooth-temple', '🛕', 'Buddha Tooth Relic Temple', '佛牙寺'], ['sentosa', '🏝️', 'Sentosa', '圣淘沙'],
+        ['marina-bay-sands', '🏙️', 'Marina Bay Sands', '滨海湾金沙'], ['changi-airport', '✈️', 'Changi Airport', '樟宜机场'],
+        ['chinatown', '🏮', 'Chinatown', '牛车水'], ['gardens-by-the-bay', '🌺', 'Gardens by the Bay', '滨海湾花园']
       ]
     },
     everyday: {

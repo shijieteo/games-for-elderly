@@ -9,6 +9,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23176b56'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-size='65'%3E🌸%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script src="engine.js" defer></script>
+  <script src="illustrations.js" defer></script>
   <script src="app.js" defer></script>
 </head>
 <body>
@@ -32,7 +33,7 @@
         <form id="settings-form">
           <fieldset><legend>Choose a theme</legend><div class="theme-options">
             <label class="theme-option"><input type="radio" name="theme" value="food" checked><span class="theme-icon" aria-hidden="true">🍜</span><span><strong>Local favourites</strong><small>Food &amp; drinks · 美食</small></span><span class="radio-mark" aria-hidden="true"></span></label>
-            <label class="theme-option"><input type="radio" name="theme" value="places"><span class="theme-icon" aria-hidden="true">🏡</span><span><strong>Around the island</strong><small>Familiar places · 地点</small></span><span class="radio-mark" aria-hidden="true"></span></label>
+            <label class="theme-option"><input type="radio" name="theme" value="places"><span class="theme-icon" aria-hidden="true">🏡</span><span><strong>Around the island</strong><small>Local landmarks · 地标</small></span><span class="radio-mark" aria-hidden="true"></span></label>
             <label class="theme-option"><input type="radio" name="theme" value="everyday"><span class="theme-icon" aria-hidden="true">🧺</span><span><strong>Everyday treasures</strong><small>Things we know · 日常用品</small></span><span class="radio-mark" aria-hidden="true"></span></label>
           </div></fieldset>
           <fieldset class="size-field"><legend>How many tiles?</legend><div class="size-options">
@@ -60,7 +61,7 @@
     <footer class="site-footer"><span class="footer-flower" aria-hidden="true">✿</span> Made for familiar faces and everyday joy.<span class="footer-detail">Free to play · No sign-up needed</span></footer>
   </main>
 
-  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" type="button" aria-label="Close instructions" data-close>×</button><span class="dialog-icon" aria-hidden="true">🌼</span><h2 id="help-title">Let's play, kaki!</h2><ol class="instructions"><li>Choose a theme and the number of tiles. All pictures stay face up so you can remember them. Press <strong>Start game</strong> when you are ready to hide them.</li><li>Tap a tile to reveal its picture. Tap another to look for the same picture.</li><li>Matching tiles stay face up. If they are different, try again!</li><li>Find all the pairs. Use <strong>Take a little peek</strong> whenever you need a hint.</li></ol><p>There is no time limit and no penalty for taking a peek. With a keyboard, use Tab to reach a tile and Enter or Space to turn it over. Arrow keys also move between tiles.</p><button class="primary-button" type="button" data-close>Got it, let's play</button></dialog>
+  <dialog id="help-dialog" aria-labelledby="help-title"><button class="dialog-close" type="button" aria-label="Close instructions" data-close>×</button><span class="dialog-icon" aria-hidden="true">🌼</span><h2 id="help-title">Let's play, kaki!</h2><ol class="instructions"><li>Choose a theme and the number of tiles. All pictures stay face up so you can remember them. Press <strong>Start game</strong> when you are ready to hide them.</li><li>Tap a tile to reveal its picture. Tap another to look for the same picture. Each tile back has a number, so you can also call out the numbers for someone to tap.</li><li>Matching tiles stay face up. If they are different, try again!</li><li>Find all the pairs. Use <strong>Take a little peek</strong> whenever you need a hint.</li></ol><p>There is no time limit and no penalty for taking a peek. With a keyboard, use Tab to reach a tile and Enter or Space to turn it over. Arrow keys also move between tiles.</p><button class="primary-button" type="button" data-close>Got it, let's play</button></dialog>
   <dialog id="win-dialog" aria-labelledby="win-title"><button class="dialog-close" type="button" aria-label="Close celebration" data-close>×</button><span class="dialog-icon" aria-hidden="true">🎉</span><p class="eyebrow">ALL PAIRS FOUND</p><h2 id="win-title">Well done, kaki!</h2><p id="win-summary"></p><p>A little patience, a lovely result.</p><button class="primary-button" id="play-again" type="button">Play again <span aria-hidden="true">↻</span></button><button class="text-button" type="button" data-close>Enjoy my completed board</button></dialog>
   <noscript><div class="noscript">Please enable JavaScript in your browser to play Kaki Match.</div></noscript>
 </body>
