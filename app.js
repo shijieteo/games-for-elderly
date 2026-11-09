@@ -148,7 +148,9 @@
     message('Have a look at all the tiles. Press Start game when you are ready to hide them.');
     if (moveFocus) {
       $('game').scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
-      $('start-button').focus({ preventScroll: true });
+      const startControl = document.body.classList.contains('is-game-fullscreen')
+        ? document.querySelector('[data-game-action="start-button"]') : $('start-button');
+      startControl.focus({ preventScroll: true });
     }
   }
 

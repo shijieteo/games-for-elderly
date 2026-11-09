@@ -7,8 +7,6 @@
   const storageKey = 'kaki-spot-difference-v1';
   const settings = { scene: 'kopitiam', count: 5, grid: true };
   let game;
-  let presenting = false;
-  let wasFullscreen = false;
 
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey));
@@ -228,33 +226,6 @@
     prepareGame(true);
   });
 
-  function applyGroupView(enabled) {
-    presenting = enabled;
-    document.body.classList.toggle('is-presenting', enabled);
-    $('spot-group').setAttribute('aria-pressed', String(enabled));
-    $('spot-group').textContent = enabled ? 'Exit group view' : '⛶ Group view';
-    $('spot-game').scrollIntoView({ block: 'start', behavior: 'instant' });
-  }
-
-  function exitGroupView() {
-    applyGroupView(false);
-    if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(() => {});
-  }
-
-  $('spot-group').addEventListener('click', () => {
-    if (presenting) exitGroupView();
-    else {
-      applyGroupView(true);
-      if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => { /* Expanded view still works without fullscreen. */ });
-    }
-  });
-  document.addEventListener('fullscreenchange', () => {
-    if (document.fullscreenElement) wasFullscreen = true;
-    else if (wasFullscreen) { wasFullscreen = false; applyGroupView(false); }
-  });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && presenting && !$('spot-help-dialog').open) exitGroupView();
-  });
   $('spot-help').addEventListener('click', () => $('spot-help-dialog').showModal());
   ['spot-close-help', 'spot-got-help'].forEach(id => $(id).addEventListener('click', () => $('spot-help-dialog').close()));
 

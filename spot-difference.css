@@ -76,12 +76,11 @@
 .spot-coaching p { color: var(--muted); font-size: 15px; line-height: 1.7; margin: 0; }
 .spot-page [hidden] { display: none; }
 #spot-help-dialog p { line-height: 1.75; }
-.spot-page.is-presenting { background: #faf9f3; }
-.is-presenting .site-header, .is-presenting .spot-intro, .is-presenting .spot-settings, .is-presenting .spot-coaching, .is-presenting .site-footer { display: none; }
-.spot-page.is-presenting main { max-width: 1840px; padding: 18px; }
-.is-presenting .spot-panel { padding: 20px 25px; }
-.is-presenting .spot-pictures { gap: 24px; }
-.is-presenting .spot-keyboard-note { display: none; }
+.spot-page.is-game-fullscreen { background: #faf9f3; }
+.spot-page.is-game-fullscreen main { max-width: 1840px; padding: 18px; }
+.is-game-fullscreen .spot-panel { padding: 20px 25px; }
+.is-game-fullscreen .spot-pictures { gap: 24px; }
+.is-game-fullscreen .spot-keyboard-note { display: none; }
 @media (max-width: 1100px) {
   .spot-settings { grid-template-columns: 1fr 1fr; }
   .spot-settings-note { grid-column: 1 / -1; margin: 0; }
@@ -105,7 +104,7 @@
   .spot-score > span { font-size: 13px; }
   .spot-findings ol { grid-template-columns: 1fr; }
   .spot-coaching { padding: 23px; align-items: flex-start; }
-  .is-presenting .spot-panel { padding: 20px 15px; }
+  .is-game-fullscreen .spot-panel { padding: 20px 15px; }
 }
 @media (max-width: 560px) {
   .spot-intro { padding: 30px 0; }
@@ -131,8 +130,8 @@
   .spot-coaching h2 { font-size: 22px; }.spot-coaching p { font-size: 14px; }
 }
 @media (min-width: 1000px) and (max-height: 900px) {
-  .is-presenting .spot-board-heading h2 { font-size: 27px; }
-  .is-presenting .spot-toolbar { margin-top: 12px; padding-top: 10px; }
-  .is-presenting .spot-message { margin: 10px 0; min-height: 40px; padding: 7px 13px; }
-  .is-presenting .spot-pictures { max-width: min(100%, calc((100vh - 300px) * 2.85 + 50px)); margin-inline: auto; }
+  .is-game-fullscreen .spot-board-heading h2 { font-size: 27px; }
+  .is-game-fullscreen .spot-toolbar { margin-top: 12px; padding-top: 10px; }
+  .is-game-fullscreen .spot-message { margin: 10px 0; min-height: 40px; padding: 7px 13px; }
+  .is-game-fullscreen .spot-pictures { max-width: min(100%, calc((100vh - 300px) * 2.85 + 50px)); margin-inline: auto; }
 }

@@ -8,6 +8,16 @@ Open `index.html` in a modern browser, or visit your GitHub Pages site. Players 
 
 The home page lets players choose a game. Every page has navigation back home and to the other games. The games also have direct links: `tile-match.html`, `colour-sequence.html` and `spot-difference.html`.
 
+### Full screen on every game
+
+Press **Full screen** on any game board for a larger, distraction-free playing area. Navigation, introductory text and settings are hidden while the current game continues. The browser enters native fullscreen when supported; an expanded page layout also works when fullscreen is unavailable or denied.
+
+- Press **Exit full screen** or **Escape** to return, with your progress preserved. Browser-initiated fullscreen exit also restores the regular layout, and the page returns to your previous scroll position and control.
+- **Tile Match:** the fullscreen toolbar includes **Start game / Start a new game**, sound and instructions. The board adapts to all four tile counts and retains team scores and peek controls.
+- **Colour Sequence:** the colour display sits beside the input pads on wide screens, keeping up to eight colours, hints and replay controls within reach. Sound and instructions remain available in the fullscreen toolbar.
+- **Spot the Difference:** fullscreen replaces the former **Group view** control. Both pictures, coordinates, hints, instructions, answer reveal and scene navigation remain available for projected group play.
+- On smaller screens, the board stays scrollable and its exit controls remain sticky. Exit fullscreen to change game settings. Opening or closing fullscreen does not reset the game.
+
 ### Kaki Match
 
 - **Three themes:** Singapore dishes and drinks (including pineapple tarts and fried rice), local landmarks (including Changi Airport and the Merlion), and everyday objects.
@@ -44,7 +54,7 @@ The interface and instructions are in English. Chinese labels accompany each pic
 - **Tap either picture:** generous target areas make it easy to select a changed object. Every discovery gets the same numbered mark in both pictures and a text explanation. Selecting a discovery again never awards another point. There is no timer or penalty for misses.
 - **Gentle hints:** **A little hint** outlines a grid square in both pictures and suggests what to compare. Repeated hints cycle through the remaining differences, without marking them found.
 - **Reveal answers:** **Show answers** marks remaining differences with dashed amber outlines. The score keeps the number you actually found, and revealed answers are labelled separately.
-- **Group play:** optional A–D / 1–3 coordinates help participants call out locations such as “B2”. **Group view** expands the pictures and hides page navigation, settings and extra content; it requests browser fullscreen where available. Use **Exit group view** or Escape to return. **Next scene** cycles through all eight scenes at the facilitator’s pace.
+- **Group play:** optional A–D / 1–3 coordinates help participants call out locations such as “B2”. **Full screen** expands the pictures and hides page navigation, settings and extra content; it requests browser fullscreen where available. Use **Exit full screen** or Escape to return. **Next scene** cycles through all eight scenes at the facilitator’s pace.
 - **Keyboard support:** Tab to either picture, then use arrow keys or Home/End to choose a square. Enter or Space checks that square for a difference. Each picture has one tab stop, and discovered answers have readable descriptions. Hints and answers are announced to screen readers.
 - **Responsive layout:** paired pictures on wide screens and stacked pictures on smaller screens. Scene, challenge and grid preferences are saved locally when browser storage is available.
 
@@ -78,6 +88,7 @@ node --test engine.test.js colour-engine.test.js spot-engine.test.js
 node --check app.js
 node --check colour-sequence.js
 node --check spot-difference.js
+node --check game-fullscreen.js
 ```
 
 The tile-matching tests cover all theme/size combinations, valid decks, invalid settings, repeated selections, mismatch locking, completing a board, fresh-game state, team turn handoffs, team scoring, and solo-mode compatibility. The colour-sequence tests cover playback input locking, sequence growth, colour-count restrictions, safe hint elimination, hint lifecycle, retries, replaying partial answers, repeated colours, paused playback, invalid inputs, and restarting.
@@ -95,6 +106,8 @@ Edit the `themes` object in `engine.js`. Each item contains:
 Keep at least 12 unique items in each theme to support the 24-tile board. Within a theme, each item must have a unique key and recognisably different picture. Custom SVG artwork lives in `illustrations.js`, keyed by the same unique key; the emoji is used when no illustration is defined. Theme controls live in `tile-match.html`, while the tile colours and layout are in `styles.css`. Shared navigation and the home page use `site.css`. The colour game uses `colour-engine.js` for its rules, `colour-sequence.js` for playback and controls, and `colour-sequence.css` for its layout.
 
 Spot the Difference artwork, descriptions and hit areas live in `spot-scenes.js`. Coordinates use an 800 × 560 view box. Each scene defines five independent changes; its renderer changes only the selected IDs in picture B. The scene selector is populated automatically from this library. The game rules are in `spot-engine.js`, controls in `spot-difference.js`, and layout in `spot-difference.css`.
+
+Shared fullscreen behaviour lives in `game-fullscreen.js` and `game-fullscreen.css`. Each game identifies its board with `data-fullscreen-board` and its toggle with `data-fullscreen-toggle`. Fullscreen-only toolbar buttons use `data-game-action` to mirror existing game controls.
 
 ## Privacy
 

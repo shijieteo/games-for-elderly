@@ -10,8 +10,10 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="colour-sequence.css">
+  <link rel="stylesheet" href="game-fullscreen.css">
   <script src="colour-engine.js" defer></script>
   <script src="colour-sequence.js" defer></script>
+  <script src="game-fullscreen.js" defer></script>
 </head>
 <body class="colour-page">
   <a class="skip-link" href="#sequence-game">Skip to the game</a>
@@ -43,7 +45,8 @@
         <a class="other-game-link" href="tile-match.html">Fancy matching pictures? <span>Try Kaki Match <span aria-hidden="true">↗</span></span></a>
       </aside>
 
-      <section class="colour-panel" id="sequence-game" aria-labelledby="sequence-title" tabindex="-1">
+      <section class="colour-panel" id="sequence-game" aria-labelledby="sequence-title" tabindex="-1" data-fullscreen-board>
+        <div class="game-view-bar" role="group" aria-label="Game view controls"><span class="game-view-note">A little play, a bigger picture.</span><div class="game-view-actions"><button class="game-view-button" type="button" data-game-action="sequence-sound" aria-pressed="false" hidden>Sound: off</button><button class="game-view-button" type="button" data-game-action="sequence-help" hidden>How to play</button><button class="game-fullscreen-button" type="button" data-fullscreen-toggle aria-pressed="false">⛶ Full screen</button></div></div>
         <div class="sequence-heading"><div><p class="eyebrow">WATCH · REMEMBER · REPEAT</p><h2 id="sequence-title">Colour Sequence</h2></div><span class="sequence-no-rush"><span aria-hidden="true">☀</span> No rush at all</span></div>
         <div class="sequence-stats" aria-label="Game progress"><div><span>Sequence length</span><strong id="sequence-length">—</strong></div><div><span>Colours remembered</span><strong id="sequence-score">0</strong></div><div><span>Your best <small>on this device</small></span><strong id="sequence-best">0</strong></div></div>
 

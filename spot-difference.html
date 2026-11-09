@@ -10,9 +10,11 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="site.css">
   <link rel="stylesheet" href="spot-difference.css">
+  <link rel="stylesheet" href="game-fullscreen.css">
   <script src="spot-scenes.js" defer></script>
   <script src="spot-engine.js" defer></script>
   <script src="spot-difference.js" defer></script>
+  <script src="game-fullscreen.js" defer></script>
 </head>
 <body class="spot-page">
   <a class="skip-link" href="#spot-game">Skip to the game</a>
@@ -32,10 +34,10 @@
       <p class="spot-settings-note">Changing the scene or challenge starts a fresh puzzle.<br> Your choices are saved on this device.</p>
     </section>
 
-    <section class="spot-panel" id="spot-game" aria-labelledby="spot-scene-title" tabindex="-1">
+    <section class="spot-panel" id="spot-game" aria-labelledby="spot-scene-title" tabindex="-1" data-fullscreen-board>
       <div class="spot-board-heading"><div><p class="eyebrow" id="spot-caption">A FAMILIAR LITTLE COFFEE BREAK</p><h2 id="spot-scene-title">A morning at the kopitiam</h2></div><div class="spot-score"><strong id="spot-found">0</strong><span id="spot-total">of 5 found</span><span class="spot-shown" id="spot-shown" hidden></span></div></div>
       <p class="spot-description" id="spot-description"></p>
-      <div class="spot-toolbar"><p id="spot-prompt">Tap a difference in either picture. There’s no rush.</p><div><button class="spot-tool" id="spot-grid" type="button" aria-pressed="true">Grid: on</button><button class="spot-tool" id="spot-group" type="button" aria-pressed="false"><span aria-hidden="true">⛶</span> Group view</button></div></div>
+      <div class="spot-toolbar"><p id="spot-prompt">Tap a difference in either picture. There’s no rush.</p><div><button class="spot-tool" id="spot-grid" type="button" aria-pressed="true">Grid: on</button><button class="game-view-button" type="button" data-game-action="spot-help" hidden>How to play</button><button class="game-fullscreen-button" id="spot-group" type="button" data-fullscreen-toggle aria-pressed="false">⛶ Full screen</button></div></div>
       <p class="spot-message" id="spot-message" role="status" aria-live="polite" aria-atomic="true">Find 5 differences. Every little detail counts!</p>
 
       <div class="spot-pictures" id="spot-pictures">
@@ -50,11 +52,11 @@
       <p class="spot-keyboard-note">Playing with a keyboard? Tab to a picture, move between squares with the arrow keys, then press Enter or Space to check a square.</p>
     </section>
 
-    <aside class="spot-coaching"><span aria-hidden="true">🌱</span><div><h2>More eyes. More little discoveries.</h2><p>For a group, try Group view and project the pictures. Call out a square, like “B2”, then let the facilitator tap the difference. Take turns so everyone can join in.</p></div></aside>
+    <aside class="spot-coaching"><span aria-hidden="true">🌱</span><div><h2>More eyes. More little discoveries.</h2><p>For a group, try Full screen and project the pictures. Call out a square, like “B2”, then let the facilitator tap the difference. Take turns so everyone can join in.</p></div></aside>
     <footer class="site-footer"><span class="footer-flower" aria-hidden="true">✿</span> Made for familiar faces and everyday joy.<span class="footer-detail">Free to play · No sign-up needed</span></footer>
   </main>
 
-  <dialog id="spot-help-dialog" aria-labelledby="spot-help-title"><button class="dialog-close" id="spot-close-help" type="button" aria-label="Close instructions">×</button><span class="dialog-icon" aria-hidden="true">🔎</span><h2 id="spot-help-title">A good look, kaki?</h2><ol class="instructions"><li>Choose a scene and find <strong>3 or 5 differences</strong> between pictures A and B. Three-difference puzzles use a selection of the changes, so the other details really do match.</li><li>Tap a changed detail in <strong>either picture</strong>. A numbered ring marks it in both pictures. There are no penalties for trying.</li><li>Need a clue? <strong>A little hint</strong> highlights a grid square and gives you something to compare. Press it again for another clue. <strong>Show answers</strong> marks the remaining differences, labelled separately from those you found.</li><li>For a big group, use <strong>Group view</strong>. It enlarges the pictures and hides extra page content. Call out coordinates such as “C2”. Press Escape or Exit group view to return.</li><li>With a keyboard, Tab to either picture. Arrow keys move between squares; Home and End reach the first and last squares. Enter or Space checks the selected square for a difference. The text descriptions in the discoveries list explain each answer.</li></ol><p>There is no time limit. Change the scene or challenge to begin a fresh puzzle, or press <strong>Next scene</strong> to keep exploring.</p><button class="primary-button" id="spot-got-help" type="button">Got it, let's look</button></dialog>
+  <dialog id="spot-help-dialog" aria-labelledby="spot-help-title"><button class="dialog-close" id="spot-close-help" type="button" aria-label="Close instructions">×</button><span class="dialog-icon" aria-hidden="true">🔎</span><h2 id="spot-help-title">A good look, kaki?</h2><ol class="instructions"><li>Choose a scene and find <strong>3 or 5 differences</strong> between pictures A and B. Three-difference puzzles use a selection of the changes, so the other details really do match.</li><li>Tap a changed detail in <strong>either picture</strong>. A numbered ring marks it in both pictures. There are no penalties for trying.</li><li>Need a clue? <strong>A little hint</strong> highlights a grid square and gives you something to compare. Press it again for another clue. <strong>Show answers</strong> marks the remaining differences, labelled separately from those you found.</li><li>For a big group, use <strong>Full screen</strong>. It enlarges the pictures and hides extra page content. Call out coordinates such as “C2”. Press Escape or Exit full screen to return.</li><li>With a keyboard, Tab to either picture. Arrow keys move between squares; Home and End reach the first and last squares. Enter or Space checks the selected square for a difference. The text descriptions in the discoveries list explain each answer.</li></ol><p>There is no time limit. Change the scene or challenge to begin a fresh puzzle, or press <strong>Next scene</strong> to keep exploring.</p><button class="primary-button" id="spot-got-help" type="button">Got it, let's look</button></dialog>
   <noscript><div class="noscript">Please enable JavaScript in your browser to play Spot the Difference. <a href="index.html">Back to all games</a></div></noscript>
 </body>
 </html>
