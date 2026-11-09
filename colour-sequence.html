@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#176b56">
+  <meta name="description" content="Watch a colourful sequence, then play it back. A friendly memory game with a big, clear display, adjustable pace and unlimited replays.">
+  <title>Colour Sequence · Kaki Play</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23176b56'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-size='65'%3E🌸%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="colour-sequence.css">
+  <script src="colour-engine.js" defer></script>
+  <script src="colour-sequence.js" defer></script>
+</head>
+<body class="colour-page">
+  <a class="skip-link" href="#sequence-game">Skip to the game</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Kaki Play home"><span class="brand-mark" aria-hidden="true">✿</span><span>Kaki<span class="brand-light">Play</span></span></a>
+    <nav class="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="tile-match.html">Tile Match</a><a href="colour-sequence.html" aria-current="page">Colour Sequence</a><a href="spot-difference.html">Spot the Difference</a></nav>
+    <div class="header-actions"><button class="quiet-button" id="sequence-sound" type="button" aria-pressed="false">Sound: off</button><button class="quiet-button" id="sequence-help" type="button">How to play <span aria-hidden="true">↗</span></button></div>
+  </header>
+
+  <main>
+    <section class="intro sequence-intro" aria-labelledby="page-title">
+      <p class="eyebrow"><span aria-hidden="true">●</span> COLOUR SEQUENCE</p>
+      <h1 id="page-title">A little colour.<br><span>A lovely memory.</span></h1>
+      <p class="intro-copy">Watch the colours light up. Tap them back in the same order.<br> One more colour each round. One little win at a time.</p>
+      <div class="colour-intro-mark" aria-hidden="true"><span class="mini-red">●</span><span class="mini-blue">◆</span><span class="mini-yellow">★</span><span class="mini-green">▲</span></div>
+    </section>
+
+    <div class="sequence-layout">
+      <aside class="sequence-settings" aria-labelledby="pace-title">
+        <div class="panel-heading"><span class="section-number" aria-hidden="true">01</span><h2 id="pace-title">Find your rhythm</h2></div>
+        <label class="sequence-label" for="sequence-colour-count">How many colours?</label>
+        <select id="sequence-colour-count" aria-describedby="colour-count-hint"><option value="2">2 colours · A gentle start</option><option value="3">3 colours · A little more</option><option value="4" selected>4 colours · Classic</option><option value="5">5 colours · A fresh splash</option><option value="6">6 colours · More variety</option><option value="7">7 colours · A bigger mix</option><option value="8">8 colours · All the colours</option></select>
+        <p class="sequence-hint" id="colour-count-hint">Fewer colours makes a gentler start. Press Start fresh to change this during a game.</p>
+        <label class="sequence-label" for="sequence-pace">How quickly do colours appear?</label>
+        <select id="sequence-pace" aria-describedby="pace-hint"><option value="relaxed">Relaxed · 1.2 seconds</option><option value="gentle">Extra time · 1.8 seconds</option><option value="quick">Quick · 0.7 seconds</option></select>
+        <p class="sequence-hint" id="pace-hint">A little pause between each colour helps you see every step. Changes apply to the next playback.</p>
+        <div class="how-it-works"><h3>A simple little rhythm</h3><ol><li><span aria-hidden="true">1</span><div><strong>Watch</strong><p>Each colour fills the big display.</p></div></li><li><span aria-hidden="true">2</span><div><strong>Remember</strong><p>Notice the colours, shapes or sounds.</p></div></li><li><span aria-hidden="true">3</span><div><strong>Repeat</strong><p>Tap the colours in the same order.</p></div></li></ol></div>
+        <div class="sequence-gentle-note"><span aria-hidden="true">🌱</span><p>Need a helping hand?<br>Try a hint or watch again.<br>There’s no time limit.</p></div>
+        <a class="other-game-link" href="tile-match.html">Fancy matching pictures? <span>Try Kaki Match <span aria-hidden="true">↗</span></span></a>
+      </aside>
+
+      <section class="colour-panel" id="sequence-game" aria-labelledby="sequence-title" tabindex="-1">
+        <div class="sequence-heading"><div><p class="eyebrow">WATCH · REMEMBER · REPEAT</p><h2 id="sequence-title">Colour Sequence</h2></div><span class="sequence-no-rush"><span aria-hidden="true">☀</span> No rush at all</span></div>
+        <div class="sequence-stats" aria-label="Game progress"><div><span>Sequence length</span><strong id="sequence-length">—</strong></div><div><span>Colours remembered</span><strong id="sequence-score">0</strong></div><div><span>Your best <small>on this device</small></span><strong id="sequence-best">0</strong></div></div>
+
+        <div class="display-heading"><span class="phase-badge" id="phase-badge">LET'S BEGIN</span><span id="display-step">Start with just one colour</span></div>
+        <div class="sequence-spotlight" id="sequence-spotlight" role="group" aria-label="Sequence display">
+          <span class="spotlight-symbol" id="spotlight-symbol" aria-hidden="true">✦</span>
+          <strong id="spotlight-title">Ready when you are</strong>
+          <span id="spotlight-caption">Your first colour is a tap away.</span>
+        </div>
+        <ol class="sequence-steps" id="sequence-steps" aria-hidden="true"></ol>
+        <p class="sequence-message" id="sequence-message" role="status" aria-live="polite" aria-atomic="true">Press Start game, then watch the big display.</p>
+
+        <div class="colour-pads" id="colour-pads" role="group" aria-label="Repeat the sequence using these colours">
+          <button class="colour-pad colour-red" type="button" data-colour="0" aria-label="Red, circle. Keyboard shortcut 1" aria-keyshortcuts="1" aria-disabled="true"><span class="pad-symbol" aria-hidden="true">●</span><span class="pad-name">Red</span><kbd aria-hidden="true">1</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-blue" type="button" data-colour="1" aria-label="Blue, diamond. Keyboard shortcut 2" aria-keyshortcuts="2" aria-disabled="true"><span class="pad-symbol" aria-hidden="true">◆</span><span class="pad-name">Blue</span><kbd aria-hidden="true">2</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-yellow" type="button" data-colour="2" aria-label="Yellow, star. Keyboard shortcut 3" aria-keyshortcuts="3" aria-disabled="true"><span class="pad-symbol" aria-hidden="true">★</span><span class="pad-name">Yellow</span><kbd aria-hidden="true">3</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-green" type="button" data-colour="3" aria-label="Green, triangle. Keyboard shortcut 4" aria-keyshortcuts="4" aria-disabled="true"><span class="pad-symbol" aria-hidden="true">▲</span><span class="pad-name">Green</span><kbd aria-hidden="true">4</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-purple" type="button" data-colour="4" aria-label="Purple, square. Keyboard shortcut 5" aria-keyshortcuts="5" aria-disabled="true" hidden><span class="pad-symbol" aria-hidden="true">■</span><span class="pad-name">Purple</span><kbd aria-hidden="true">5</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-orange" type="button" data-colour="5" aria-label="Orange, plus. Keyboard shortcut 6" aria-keyshortcuts="6" aria-disabled="true" hidden><span class="pad-symbol" aria-hidden="true">✚</span><span class="pad-name">Orange</span><kbd aria-hidden="true">6</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-pink" type="button" data-colour="6" aria-label="Pink, heart. Keyboard shortcut 7" aria-keyshortcuts="7" aria-disabled="true" hidden><span class="pad-symbol" aria-hidden="true">♥</span><span class="pad-name">Pink</span><kbd aria-hidden="true">7</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+          <button class="colour-pad colour-teal" type="button" data-colour="7" aria-label="Teal, crescent. Keyboard shortcut 8" aria-keyshortcuts="8" aria-disabled="true" hidden><span class="pad-symbol" aria-hidden="true">☾</span><span class="pad-name">Teal</span><kbd aria-hidden="true">8</kbd><span class="pad-excluded" aria-hidden="true" hidden>Ruled out</span></button>
+        </div>
+        <div class="sequence-controls"><button class="primary-button" id="sequence-action" type="button">Start game <span aria-hidden="true">→</span></button><button class="sequence-replay" id="sequence-replay" type="button" disabled><span aria-hidden="true">↻</span> Watch again</button><button class="sequence-hint-button" id="sequence-hint" type="button" disabled hidden>A little hint</button><button class="sequence-reset" id="sequence-reset" type="button" hidden>Start fresh</button></div>
+        <p class="keyboard-hint" id="keyboard-hint">Tap a colour, or use keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> when it’s your turn.</p>
+      </section>
+    </div>
+    <footer class="site-footer"><span class="footer-flower" aria-hidden="true">✿</span> Made for familiar faces and everyday joy.<span class="footer-detail">Free to play · No sign-up needed</span></footer>
+  </main>
+
+  <dialog id="sequence-help-dialog" aria-labelledby="help-title"><button class="dialog-close" id="close-help" type="button" aria-label="Close instructions">×</button><span class="dialog-icon" aria-hidden="true">🌈</span><h2 id="help-title">A little colour, kaki?</h2><ol class="instructions"><li>Choose <strong>2–8 colours</strong>, select a playback pace and press <strong>Start game</strong>. Watch the big display: each colour has its own name and shape. Press <strong>Start fresh</strong> to change the colour count during play.</li><li>When you see <strong>Your turn</strong>, tap the coloured buttons in the same order. You can also use the number keys shown on your buttons (up to <strong>1–8</strong>), or use Tab and Enter or Space.</li><li>Get the sequence right, then press <strong>Next round</strong>. The same sequence grows by one colour.</li><li>Need a clue? Press <strong>A little hint</strong> to rule out wrong colours for the current step. With 3–8 colours, two choices remain; with 2 colours, only the answer remains. Each new step has a fresh hint available.</li><li>Need another look? Press <strong>Watch again</strong> to replay from the beginning. If you make a mistake, you can try the same sequence again.</li></ol><p>Sound is optional. Each colour has a different note. Your best is the longest sequence you have correctly repeated, even if you used hints or replays. There is no time limit.</p><button class="primary-button" id="got-help" type="button">Got it, let's play</button></dialog>
+  <noscript><div class="noscript">Please enable JavaScript in your browser to play Colour Sequence. <a href="index.html">Back to all games</a></div></noscript>
+</body>
+</html>

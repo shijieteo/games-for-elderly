@@ -1,0 +1,103 @@
+/* Shared navigation and the game library. The games work without a build step. */
+:root { --muted: #59695e; }
+.site-header { gap: 24px; flex-wrap: wrap; }
+.brand { flex-shrink: 0; }
+.site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.site-nav a { display: inline-flex; align-items: center; min-height: 46px; padding: 10px 14px; border-radius: 10px; font-size: 15px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+.site-nav a:hover { background: #eaf2e9; color: var(--green-dark); }
+.site-nav a[aria-current="page"] { background: var(--light-green); color: var(--green-dark); box-shadow: inset 0 -3px var(--green); }
+.header-actions { gap: 12px; }
+.header-welcome { color: var(--muted); font-size: 15px; }
+.home-intro { display: flex; align-items: center; justify-content: space-between; gap: 30px; padding: 70px 0 58px; }
+.home-intro h1 { font-size: clamp(40px, 4.5vw, 62px); line-height: 1.16; max-width: 850px; }
+.home-intro-copy { color: var(--muted); font-size: 19px; line-height: 1.75; margin: 22px 0; }
+.home-promise { display: flex; flex-wrap: wrap; gap: 12px 25px; font-size: 15px; font-weight: 600; }
+.home-promise span span { color: var(--green); padding-right: 6px; }
+.home-flower { position: relative; flex: 0 0 220px; text-align: center; transform: rotate(8deg); }
+.home-flower > span:first-child { display: block; font-family: Georgia, serif; color: #c37944; font-size: 200px; line-height: 1; text-shadow: 8px 8px 0 #efe3ce; }
+.flower-sparkle { position: absolute; top: 0; right: 0; color: var(--green); font-size: 45px; }
+.flower-caption { display: block; color: var(--muted); font-family: Georgia, serif; font-style: italic; font-size: 20px; line-height: 1.5; margin-top: 15px; }
+.library-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.library-heading h2 { margin: 0; font-family: Georgia, serif; font-size: 30px; font-weight: 500; letter-spacing: -.5px; }
+.library-heading p { margin: 0; color: var(--muted); font-size: 15px; }
+.game-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.game-card { display: flex; flex-direction: column; overflow: hidden; background: var(--white); border: 1px solid var(--line); border-radius: 22px; text-decoration: none; box-shadow: 0 5px 15px #273e3504; transition: transform .2s, box-shadow .2s, border-color .2s; }
+.game-card:hover { transform: translateY(-4px); border-color: #9ab5a2; box-shadow: 0 14px 32px #273e3510; }
+.card-preview { min-height: 270px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 20px; border-bottom: 1px solid var(--line); }
+.match-preview { background: #eaf0e5; }
+.colour-preview { background: #f0eaf3; }
+.preview-caption { font-size: 11px; font-weight: 750; letter-spacing: 2px; color: #4c6051; }
+.preview-note { color: #4c6051; font-size: 14px; margin-top: 23px; }
+.preview-tiles { display: flex; align-items: center; gap: 14px; margin-top: 25px; }
+.preview-tile { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 105px; border-radius: 14px; box-shadow: 0 5px 0 #273e3512; }
+.preview-tile-back { background: #176b56; border: 5px double #6eac94; color: #fff8df; font-size: 48px; font-weight: 750; transform: rotate(-8deg); }
+.preview-tile-front { background: #fffefb; border: 2px solid #bad0b9; transform: rotate(-3deg); }
+.preview-tile-front > span { font-size: 50px; line-height: 1.3; }
+.preview-tile small { font-size: 12px; font-weight: 600; }
+.matched-preview { transform: rotate(8deg); border-color: var(--green); }
+.matched-preview i { position: absolute; top: -9px; right: -9px; display: grid; place-items: center; width: 27px; height: 27px; border-radius: 50%; background: var(--green); color: white; font-style: normal; font-size: 16px; }
+.preview-sequence { display: flex; gap: 8px; margin: 35px 0 7px; }
+.preview-colour { display: grid; place-items: center; width: 64px; height: 85px; border-radius: 20px; font-size: 37px; color: white; box-shadow: 0 5px 0 #273e3515; }
+.preview-red { background: #b93842; transform: rotate(-9deg); }
+.preview-blue { background: #265bb5; transform: translateY(-8px) rotate(-3deg); }
+.preview-yellow { background: #f4ca60; color: #4d3a0a; transform: translateY(-8px) rotate(3deg); }
+.preview-green { background: #16634c; transform: rotate(9deg); }
+.game-card-copy { padding: 28px 25px 24px; display: flex; flex-direction: column; flex: 1; }
+.game-category { font-size: 11px; font-weight: 750; letter-spacing: 1.8px; color: var(--green); }
+.game-card h3 { font-family: Georgia, serif; font-size: 34px; font-weight: 500; letter-spacing: -.6px; margin: 10px 0 12px; }
+.game-card-copy > p { color: var(--muted); font-size: 17px; line-height: 1.75; margin: 0 0 20px; }
+.card-features { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; margin-bottom: 28px; }
+.card-features span { padding: 7px 11px; border-radius: 7px; background: var(--paper); color: #526257; font-size: 12px; font-weight: 600; }
+.card-action { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--green-dark); font-size: 18px; font-weight: 750; border-top: 1px solid var(--line); padding-top: 22px; }
+.card-action > span { font-size: 25px; }
+.spot-preview { background: #f4ebd9; }
+.preview-comparison { display: flex; gap: 12px; align-items: center; width: 100%; margin: 26px 0 1px; }
+.preview-scene { display: block; width: calc((100% - 12px) / 2); height: auto; border-radius: 13px; border: 2px solid #c7d5bc; box-shadow: 0 4px 0 #273e3510; transform: rotate(-3deg); }
+.preview-scene + .preview-scene { transform: rotate(3deg); border-color: #85a489; }
+.spot-card .card-action { font-size: 16px; }
+.home-note { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 36px 0 12px; padding: 28px; background: #efeee4; border-radius: 16px; }
+.home-note > span { font-size: 36px; }
+.home-note h2 { font-family: Georgia, serif; font-size: 23px; font-weight: 500; margin: 0 0 7px; }
+.home-note p { font-size: 15px; line-height: 1.65; color: var(--muted); margin: 0; }
+@media (max-width: 1050px) {
+  .game-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-header { gap: 12px 20px; }
+  .site-nav { order: 3; width: 100%; justify-content: center; border-top: 1px solid var(--line); padding-top: 10px; }
+  .header-actions, .header-welcome { margin-left: auto; }
+  .home-flower { flex-basis: 160px; }
+  .home-flower > span:first-child { font-size: 150px; }
+  .library-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .preview-colour { width: 65px; height: 85px; }
+  .preview-sequence { gap: 8px; }
+  .preview-tile { width: 80px; height: 105px; }
+  .preview-tiles { gap: 10px; }
+}
+@media (max-width: 700px) {
+  .site-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; }
+  .site-nav a { justify-content: center; text-align: center; }
+  .home-intro { padding: 42px 0; }
+  .home-intro h1 { font-size: 43px; }
+  .home-intro-copy { font-size: 17px; }
+  .home-intro-copy br { display: none; }
+  .home-flower { display: none; }
+  .game-cards { grid-template-columns: 1fr; gap: 24px; }
+  .card-preview { min-height: 255px; }
+  .preview-colour { width: 75px; height: 90px; }
+  .preview-tile { width: 90px; height: 110px; }
+  .game-card-copy { padding: 26px; }
+  .home-note { padding: 24px 20px; align-items: flex-start; gap: 12px; }
+}
+@media (max-width: 420px) {
+  .site-nav { gap: 0; justify-content: space-between; }
+  .site-nav a { font-size: 13px; padding: 10px 9px; }
+  .header-welcome { max-width: 120px; text-align: right; font-size: 13px; }
+  .home-intro h1 { font-size: 36px; }
+  .home-promise { gap: 10px 15px; font-size: 13px; }
+  .library-heading h2 { font-size: 27px; }
+  .preview-colour { width: 60px; height: 80px; font-size: 35px; }
+  .preview-note { font-size: 12px; }
+  .game-card-copy { padding: 24px 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-card:hover { transform: none; }
+}
